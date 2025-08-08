@@ -1,389 +1,47 @@
-<div class="tortas-container">
-  <h2>Nuestras Tortas</h2>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="carrusel.css">
+  <title>Document</title>
+</head>
+<body>
+
+  <div class="tortas-container">
+  <h2>Tortas Tradicionales</h2>
 
   <!-- === FILTRO POR INGREDIENTE === -->
   <div class="filtro-grupo">
     <label for="filtro-ingrediente"><strong>Filtrar por ingrediente:</strong></label>
-    <select id="filtro-ingrediente" onchange="aplicarFiltroIngrediente()">
-      <option value="">Mostrar todas</option>
-      <!-- Las opciones se generarán dinámicamente -->
-    </select>
-    <button onclick="limpiarFiltro()" style="margin-left: 10px; padding: 5px 10px; font-size: 0.9em;">Limpiar</button>
+    <select id="filtro-ingrediente">
+    <option value="">Seleccionar ingrediente...</option>
+    <option value="todas">Todas las tortas</option>
+    <!-- Las demás opciones se generarán dinámicamente -->
+  </select>
+    <button onclick="limpiarFiltro()" style="margin-left: 10px; padding: 5px 10px; font-size: 0.9em;">Borrar</button>
   </div>
   <!-- === FIN FILTRO === -->
 
   <div class="tortas-grid" id="tortas-grid">
     <!-- Las cards se generarán aquí dinámicamente -->
   </div>
+  
+  <!-- Carrusel de Tortas -->
+<div class="carrusel-container">
+  <h2>Tortas en Carrusel</h2>
+  <div class="carrusel" id="carrusel-resultados">
+    <!-- Las tarjetas se generarán aquí dinámicamente -->
+  </div>
+  <button class="carrusel-btn prev" onclick="moverCarrusel(-1)">&#10094;</button>
+  <button class="carrusel-btn next" onclick="moverCarrusel(1)">&#10095;</button>
 </div>
 
-<script>
-// === DATOS COMPLETOS DE TODAS LAS TORTAS ===
-const tortasData = [
-  {
-    nombre: "Merengue Lúcuma",
-    ingredientes: ["Merengue horneado", "chantilly", "lúcuma"],
-    precios: { "10p": 24900, "15p": 34900, "20p": 39900, "30p": 49900 }
-  },
-  {
-    nombre: "Red Velvet",
-    ingredientes: ["Bizcocho red velvet", "frosting queso crema", "chantilly"],
-    precios: { "10p": 27900, "15p": 38900, "20p": 45900, "30p": 52900 }
-  },
-  {
-    nombre: "Vainilla Maracuyá",
-    ingredientes: ["Bizcocho vainilla", "cremoso maracuyá", "chantilly", "maracuyá"],
-    precios: { "10p": 26900, "15p": 37900, "20p": 44900, "30p": 51900 }
-  },
-  {
-    nombre: "Chocolate Maracuyá",
-    ingredientes: ["Bizcocho chocolate", "cremoso maracuyá", "ganache", "maracuyá"],
-    precios: { "10p": 28900, "15p": 39900, "20p": 48900, "30p": 52900 }
-  },
-  {
-    nombre: "Moka",
-    ingredientes: ["Bizcocho chocolate", "muselina choc/café", "muselina vainilla", "chantilly choc"],
-    precios: { "10p": 26900, "15p": 37900, "20p": 43900, "30p": 50900 }
-  },
-  {
-    nombre: "Chocolate Naranja",
-    ingredientes: ["Bizcocho chocolate", "ganache", "crema naranja", "chantilly choc", "naranjas confitadas"],
-    precios: { "10p": 25900, "15p": 35900, "20p": 43900, "30p": 50900 }
-  },
-  {
-    nombre: "Piña Colada",
-    ingredientes: ["Bizcocho vainilla", "chantilly", "piña", "coco", "ron"],
-    precios: { "10p": 24900, "15p": 34900, "20p": 42900, "30p": 49900 }
-  },
-  {
-    nombre: "Piña Clásica",
-    ingredientes: ["Bizcocho vainilla", "chantilly", "piña"],
-    precios: { "10p": 22900, "15p": 31900, "20p": 39900, "30p": 48900 }
-  },
-  {
-    nombre: "Oreo",
-    ingredientes: ["Bizcocho chocolate", "ganache", "crema Oreo"],
-    precios: { "10p": 27900, "15p": 39900, "20p": 46900, "30p": 54900 }
-  },
-  {
-    nombre: "Amor",
-    ingredientes: ["Bizcocho vainilla", "crema pastelera", "frambuesas", "manjar", "merengue", "suspiros", "frambuesas liofilizadas"],
-    precios: { "10p": 26900, "15p": 36900, "20p": 43900, "30p": 53900 }
-  },
-  {
-    nombre: "4 Leches",
-    ingredientes: ["Bizcocho chocolate", "chantilly choc", "tres leches", "merengue", "chips choc"],
-    precios: { "10p": 24900, "15p": 35900, "20p": 42900, "30p": 50900 }
-  },
-  {
-    nombre: "Bariloche",
-    ingredientes: ["Bizcocho chocolate", "buttercream manjar", "crema Bariloche", "placas choc"],
-    precios: { "10p": 24900, "15p": 35900, "20p": 42900, "30p": 51900 }
-  },
-  {
-    nombre: "Baileys",
-    ingredientes: ["Bizcocho chocolate", "ganache Baileys", "placas choc", "trufas", "nueces"],
-    precios: { "10p": 26900, "15p": 38900, "20p": 47900, "30p": 53900 }
-  },
-  {
-    nombre: "Merengue Frambuesas (helada)",
-    ingredientes: ["Merengue horneado", "crema leche y frambuesa"],
-    precios: { "10p": 23900, "15p": 33900, "20p": 39900, "30p": 49900 }
-  },
-  {
-    nombre: "Tres Leches",
-    ingredientes: ["Bizcocho vainilla", "manjar", "tres leches", "merengue"],
-    precios: { "10p": 23900, "15p": 34900, "20p": 40900, "30p": 49900 }
-  }
-];
+<script src="tortas.js"></script>
+<script src="carrusel.js"></script>
+</body>
+</html>
 
-// === SANITIZACIÓN ===
-function sanitizeText(text) {
-  const div = document.createElement('div');
-  div.textContent = text;
-  return div.textContent;
-}
 
-// === GENERAR OPCIONES DE INGREDIENTES ÚNICOS ===
-function generarOpcionesIngredientes() {
-  const select = document.getElementById('filtro-ingrediente');
-  const todosIngredientes = new Set();
 
-  tortasData.forEach(torta => {
-    torta.ingredientes.forEach(ing => {
-      const limpio = ing.trim().toLowerCase();
-      todosIngredientes.add(limpio);
-    });
-  });
 
-  // Ordenar alfabéticamente
-  Array.from(todosIngredientes)
-    .sort()
-    .forEach(ing => {
-      const option = document.createElement('option');
-      option.value = ing;
-      option.textContent = ing.charAt(0).toUpperCase() + ing.slice(1); // Capitalizar
-      select.appendChild(option);
-    });
-}
-
-// === GENERAR CARDS ===
-function generarCards() {
-  const contenedor = document.getElementById('tortas-grid');
-  contenedor.innerHTML = '';
-
-  tortasData.forEach(torta => {
-    const nombreSeguro = sanitizeText(torta.nombre);
-    const ingredientesSeguros = torta.ingredientes.map(ing => sanitizeText(ing));
-    const precios = Object.keys(torta.precios);
-    const defaultSize = precios[0];
-    const defaultPrice = torta.precios[defaultSize];
-
-    const card = document.createElement('div');
-    card.className = 'torta-card';
-    card.dataset.ingredientes = torta.ingredientes.map(ing => ing.toLowerCase()).join(',');
-
-    // Título
-    const titulo = document.createElement('h3');
-    titulo.textContent = nombreSeguro;
-    card.appendChild(titulo);
-
-    // Ingredientes
-    const pIngredientes = document.createElement('p');
-    pIngredientes.className = 'ingredientes';
-    pIngredientes.textContent = ingredientesSeguros.join(' • ');
-    card.appendChild(pIngredientes);
-
-    // Selector de porciones
-    const divSelector = document.createElement('div');
-    divSelector.className = 'selector';
-
-    const label = document.createElement('label');
-    label.textContent = 'Porciones:';
-    divSelector.appendChild(label);
-
-    const select = document.createElement('select');
-    select.className = 'porciones-select';
-    select.addEventListener('change', () => actualizarPrecio(select));
-
-    precios.forEach(size => {
-      const option = document.createElement('option');
-      option.value = size;
-      option.dataset.precio = torta.precios[size];
-      option.textContent = size;
-      if (size === defaultSize) option.selected = true;
-      select.appendChild(option);
-    });
-    divSelector.appendChild(select);
-    card.appendChild(divSelector);
-
-    // Precio
-    const divPrecio = document.createElement('div');
-    divPrecio.className = 'precio';
-    const spanPrecio = document.createElement('span');
-    spanPrecio.className = 'precio-valor';
-    spanPrecio.textContent = defaultPrice.toLocaleString('es-CL');
-    divPrecio.appendChild(document.createTextNode('Precio: $'));
-    divPrecio.appendChild(spanPrecio);
-    card.appendChild(divPrecio);
-
-    // Botón
-    const btn = document.createElement('button');
-    btn.className = 'btn-reservar';
-    btn.textContent = 'Reservar por WhatsApp';
-    btn.addEventListener('click', () => reservarTorta(nombreSeguro, select));
-    card.appendChild(btn);
-
-    contenedor.appendChild(card);
-  });
-}
-
-// === ACTUALIZAR PRECIO ===
-function actualizarPrecio(select) {
-  const priceSpan = select.closest('.torta-card').querySelector('.precio-valor');
-  const precio = select.selectedOptions[0].dataset.precio;
-  priceSpan.textContent = parseInt(precio).toLocaleString('es-CL');
-}
-
-// === RESERVAR POR WHATSAPP ===
-function reservarTorta(nombre, selectElement) {
-  const porciones = selectElement.value;
-  const precio = selectElement.selectedOptions[0].dataset.precio;
-  const precioFormateado = parseInt(precio).toLocaleString('es-CL');
-  const porcionesTexto = porciones.replace('p', ' personas');
-
-  const mensaje = `Hola, quiero reservar la torta: *${nombre}*, para ${porcionesTexto}. Precio: $${precioFormateado}. ¿Está disponible?`;
-  const mensajeEncoded = encodeURIComponent(mensaje);
-
-  // 🔁 CAMBIA ESTE NÚMERO
-  const numeroWhatsApp = '56912345678'; // Ej: 569...
-  const url = `https://wa.me/${numeroWhatsApp}?text=${mensajeEncoded}`;
-
-  window.open(url, '_blank', 'noopener,noreferrer');
-}
-
-// === FILTRAR POR INGREDIENTE ===
-function aplicarFiltroIngrediente() {
-  const filtro = document.getElementById('filtro-ingrediente').value.toLowerCase();
-  const cards = document.querySelectorAll('.torta-card');
-
-  cards.forEach(card => {
-    const ingredientes = card.dataset.ingredientes;
-    const visible = !filtro || ingredientes.includes(filtro);
-    card.style.display = visible ? 'block' : 'none';
-  });
-}
-
-// === LIMPIAR FILTRO ===
-function limpiarFiltro() {
-  const select = document.getElementById('filtro-ingrediente');
-  select.value = '';
-  aplicarFiltroIngrediente();
-}
-
-// === INICIAR ===
-document.addEventListener('DOMContentLoaded', () => {
-  try {
-    generarCards();
-    generarOpcionesIngredientes(); // Llenar el select con ingredientes reales
-  } catch (error) {
-    console.error('[Tortas] Error al cargar:', error);
-  }
-});
-</script>
-
-<style>
-  .tortas-container {
-    font-family: 'Helvetica', sans-serif;
-    padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
-  .tortas-container h2 {
-    text-align: center;
-    color: #333;
-    margin-bottom: 20px;
-    font-size: 1.8em;
-  }
-
-  .filtro-grupo {
-    margin-bottom: 30px;
-    padding: 15px;
-    background: #f9f9f9;
-    border-radius: 10px;
-    border: 1px solid #eee;
-  }
-
-  .filtro-grupo label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: bold;
-    color: #333;
-  }
-
-  .filtro-grupo select, .filtro-grupo button {
-    padding: 10px;
-    font-size: 1em;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-  }
-
-  .filtro-grupo select {
-    width: calc(100% - 100px);
-    margin-right: 10px;
-  }
-
-  .filtro-grupo button {
-    width: 90px;
-    background: #9e9e9e;
-    color: white;
-    border: none;
-    cursor: pointer;
-  }
-
-  .filtro-grupo button:hover {
-    background: #757575;
-  }
-
-  .tortas-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 24px;
-  }
-
-  .torta-card {
-    border: 1px solid #e0e0e0;
-    border-radius: 12px;
-    padding: 22px;
-    background: #fff;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    transition: all 0.3s ease;
-  }
-
-  .torta-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
-  }
-
-  .torta-card h3 {
-    margin: 0 0 10px 0;
-    color: #c62828;
-    font-size: 1.3em;
-    font-weight: 600;
-  }
-
-  .ingredientes {
-    font-size: 0.9em;
-    color: #555;
-    margin: 8px 0;
-    line-height: 1.4;
-  }
-
-  .selector {
-    margin: 16px 0;
-  }
-
-  .selector label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 6px;
-    color: #333;
-    font-size: 0.95em;
-  }
-
-  .porciones-select {
-    padding: 10px;
-    width: 100%;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    font-size: 1em;
-    background: #fff;
-  }
-
-  .precio {
-    font-size: 1.25em;
-    font-weight: bold;
-    color: #2e7d32;
-    margin: 12px 0;
-  }
-
-  .btn-reservar {
-    background-color: #25D366;
-    color: white;
-    border: none;
-    padding: 14px;
-    width: 100%;
-    border-radius: 8px;
-    font-size: 1.05em;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-
-  .btn-reservar:hover {
-    background-color: #128C7E;
-  }
-</style>

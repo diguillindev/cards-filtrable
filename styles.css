@@ -1,0 +1,185 @@
+  /* styles.css */
+  .tortas-container {
+    font-family: 'Helvetica', sans-serif;
+    padding: 20px;
+    max-width: 1200px;
+    max-height: 500px;
+    margin: 0 auto;
+  }
+
+  .tortas-container h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 0px;
+    font-size: 1.8em;
+  }
+
+  .filtro-grupo {
+    margin-bottom: 10px;
+    padding: 15px;
+    background: #ffffffbe;
+    border-radius: 10px;
+    border: 1px solid #eee;
+  }
+
+  .filtro-grupo label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333;
+  }
+
+  .filtro-grupo select,
+  .filtro-grupo button {
+    padding: 10px;
+    font-size: 20px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: rgba(255, 255, 255, 0);
+    /* Fondo semi-transparente */
+    color: #333;
+    /* Texto oscuro para contraste */
+
+  }
+
+  .filtro-grupo select {
+    width: 50%;
+  }
+
+  .filtro-grupo button {
+    width: 90px;
+    margin-top: 10px;
+    background: #9e9e9e;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+
+  .filtro-grupo button:hover {
+    background: #757575;
+  }
+
+  .tortas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 320px));
+    /* ⬅️ Fijo o flexible, pero no 1fr */
+    gap: 24px;
+    justify-content: center;
+    /* Centra las cards si no llenan toda la fila */
+    align-items: start; /* ⬅️ Clave: evita que las celdas se estiren juntas */
+  }
+
+  .torta-card {
+    width: 240px;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 16px;
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+  }
+
+  .torta-img {
+    width: 100%;
+    height: auto;
+    /* ⬅️ Altura fija (ideal para mantener proporción) */
+    object-fit: cover;
+    /* Corta si es necesario, pero llena el espacio */
+    border-radius: 10px;
+    margin-bottom: 14px;
+    border: 1px solid #eee;
+  }
+
+  .torta-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+  }
+
+  .torta-card h3 {
+    margin: 0 0 10px 0;
+    color: lab(35.63% 39.65 21.28);
+    font-size: 1.3em;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  .torta-card .btn-mas {
+    background: #d4a5a5;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    font-size: 0.9rem;
+    border-radius: 6px;
+    cursor: pointer;
+    margin: 8px auto;
+    display: block;
+    transition: background 0.3s;
+  }
+
+  .torta-card .btn-mas:hover {
+    background: #c07a7a;
+  }
+
+  .contenido-torta.oculto {
+    display: none !important;
+  }
+
+  .ingredientes {
+    font-size: 0.95rem;
+    color: #555;
+    text-align: left;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    margin: 8px 0;
+    line-height: 1.4;
+  }
+
+  .selector {
+    margin: 16px 0;
+  }
+
+  .selector label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 6px;
+    color: #333;
+    font-size: 0.95em;
+  }
+
+  .porciones-select {
+    padding: 10px;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1em;
+    background: #fff;
+  }
+
+  .precio {
+    font-size: 1.25em;
+    font-weight: bold;
+    color: #2e7d32;
+    margin: 12px 0;
+  }
+
+  .btn-reservar {
+    background-color: #b625d3;
+    color: white;
+    border: none;
+    padding: 14px;
+    width: 100%;
+    border-radius: 8px;
+    font-size: 1.05em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .btn-reservar:hover {
+    background-color: #128C7E;
+  }
+
+

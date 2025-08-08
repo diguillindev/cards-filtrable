@@ -1,0 +1,103 @@
+[
+  {
+    "key": "group_datos_torta",
+    "title": "Datos de Torta",
+    "fields": [
+      {
+        "key": "field_ingredientes",
+        "label": "Ingredientes",
+        "name": "ingredientes",
+        "type": "textarea",
+        "instructions": "Lista de ingredientes separados por comas",
+        "required": 1,
+        "default_value": "",
+        "placeholder": "Ej: Bizcocho vainilla, chantilly, piña",
+        "rows": "3",
+        "wrapper": {
+          "width": "100",
+          "class": "",
+          "id": ""
+        }
+      },
+      {
+        "key": "field_precio_10p",
+        "label": "Precio 10 personas",
+        "name": "precio_10p",
+        "type": "number",
+        "instructions": "Precio para 10 personas",
+        "required": 1,
+        "default_value": "0",
+        "prepend": "$",
+        "min": "0",
+        "step": "1",
+        "wrapper": {
+          "width": "25",
+          "class": "",
+          "id": ""
+        }
+      },
+      {
+        "key": "field_precio_15p",
+        "label": "Precio 15 personas",
+        "name": "precio_15p",
+        "type": "number",
+        "instructions": "Precio para 15 personas",
+        "required": 1,
+        "default_value": "0",
+        "prepend": "$",
+        "min": "0",
+        "step": "1",
+        "wrapper": {
+          "width": "25",
+          "class": "",
+          "id": ""
+        }
+      },
+      {
+        "key": "field_precio_20p",
+        "label": "Precio 20 personas",
+        "name": "precio_20p",
+        "type": "number",
+        "instructions": "Precio para 20 personas",
+        "required": 1,
+        "default_value": "0",
+        "prepend": "$",
+        "min": "0",
+        "step": "1",
+        "wrapper": {
+          "width": "25",
+          "class": "",
+          "id": ""
+        }
+      },
+      {
+        "key": "field_precio_30p",
+        "label": "Precio 30 personas",
+        "name": "precio_30p",
+        "type": "number",
+        "instructions": "Precio para 30 personas",
+        "required": 1,
+        "default_value": "0",
+        "prepend": "$",
+        "min": "0",
+        "step": "1",
+        "wrapper": {
+          "width": "25",
+          "class": "",
+          "id": ""
+        }
+      }
+    ],
+    "location": [
+      [
+        {
+          "param": "post_type",
+          "operator": "==",
+          "value": "torta"
+        }
+      ]
+    ],
+    "active": true,
+    "description": ""
+  }
+]
